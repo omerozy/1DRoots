@@ -20,18 +20,20 @@ elif not f(xL)*f(xU) < 0:
 
 # Execution of method
 solFound = False
+fL = f(xL)
 for iterIdx in range(maxIterNum):
     xR = (xL + xU)/2 # estimate root as the middle of interval
-    if abs(f(xR)) < errLim:
-        xS = xR
+    fR = f(xR)
+    if abs(fR) < errLim:
         solFound = True
         break
-    elif f(xL)*f(xR) < 0: # root lies in lower subinterval
+    elif fL*fR < 0: # root lies in lower subinterval
         xU = xR
-    elif f(xL)*f(xR) > 0: # root lies in upper subinterval
+    elif fL*fR > 0: # root lies in upper subinterval
         xL = xR
+        fL = fR
 
 if solFound:
-    print("\nSolution was found as " + str(xS) + " after " + str(iterIdx + 1) + " iterations.\n")
+    print("\nSolution was found as " + str(xR) + " after " + str(iterIdx + 1) + " iterations.\n")
 else:
-    print("Solution could not be found after specified number of iterations.")
+    print("\nSolution could not be found after specified number of iterations.\n")
