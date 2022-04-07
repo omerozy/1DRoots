@@ -21,8 +21,9 @@ elif not f(xL)*f(xU) < 0:
 # Execution of method
 solFound = False
 fL = f(xL)
+fU = f(xU)
 for iterIdx in range(maxIterNum):
-    xR = (xL + xU)/2 # estimate root as the middle of interval
+    xR = xU - fU*(xL - xU)/(fL - fU) # estimate root as the middle of interval
     fR = f(xR)
     test = fL*fR
     if abs(fR) < errLim:
@@ -30,6 +31,7 @@ for iterIdx in range(maxIterNum):
         break
     elif test < 0: # root lies in lower subinterval
         xU = xR
+        fU = fR
     elif test > 0: # root lies in upper subinterval
         xL = xR
         fL = fR
