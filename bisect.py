@@ -26,6 +26,7 @@ for iterIdx in range(maxIterNum):
     fR = f(xR)
     test = fL*fR
     if abs(fR) < errLim:
+        err = abs(fR)
         solFound = True
         break
     elif test < 0: # root lies in lower subinterval
@@ -35,6 +36,6 @@ for iterIdx in range(maxIterNum):
         fL = fR
 
 if solFound:
-    print("\nSolution was found as " + str(xR) + " after " + str(iterIdx + 1) + " iterations.\n")
+    print("\nSolution was found as " + str(xR) + " with error " + str(err) + " after " + str(iterIdx + 1) + " iterations.\n")
 else:
     print("\nSolution could not be found after specified number of iterations.\n")
