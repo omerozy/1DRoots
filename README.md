@@ -27,3 +27,5 @@ Open method using the formula obtained by manipulating the objective function
 Widely used method utilizing the derivative of the objective function
 
 ## Secant Method
+
+Similar to Newton-Raphson but utilizes backward finite divided difference for the objective function derivative instead of using the derivative function given as input
