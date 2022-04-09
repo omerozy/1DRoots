@@ -27,7 +27,6 @@ if method == 0:
     fRb = f(xRb)
 solFound = False
 for iterIdx in range(maxIterNum):
-    print(iterIdx)
     match method:
         case 0:
             dfR = (fRHist[-1]-fRb)/(xRHist[-1] - xRb)
