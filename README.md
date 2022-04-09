@@ -24,4 +24,6 @@ Open method using the formula obtained by manipulating the objective function
 
 ## Newton-Raphson mehod
 
+Widely used method utilizing the derivative of the objective function
+
 ## Secant Method
