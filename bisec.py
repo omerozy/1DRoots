@@ -1,41 +1,42 @@
 import sys
 
-# Inputs
-xL = 3 # lower guess for root   # Note: Select lower and upper guesses such that xL < xR and f(xL)*f(xU) < 0
-xU = 9 # upper guess for root
+class bisec:
+    def __init__(self, objFunc, xL, xU, errLim, maxIterNum):
+        self.xL = xL
+        self.xU = xU
+        self.errLim = errLim
+        self.maxIterNum = maxIterNum
+        self.objFunc = objFunc
 
-errLim = 10**-5 # solution error limit for stopping execution
+    def check(self):    # Check if conditions are met for execution
+        if not self.xL < self.xU:
+            sys.exit("Method condition is not satisfied: Lower guess input should be lower than upper guess input.")
+        elif not self.objFunc(self.xL)*self.objFunc(self.xU) < 0:
+            sys.exit("Method condition is not satisfied: Product of function outputs at two guesses should be less than 0.")
 
-maxIterNum = 100 # maximum number of iterations
+    def exec(self):
+        self.solFound = False
+        xL = self.xL
+        xU = self.xU
+        fL = self.objFunc(xL)
+        for iterIdx in range(self.maxIterNum):
+            xR = (xL + xU)/2 # estimate root as the middle of interval
+            fR = self.objFunc(xR)
+            test = fL*fR
+            self.err = abs(fR)
+            if self.err < self.errLim:
+                self.solFound = True
+                break
+            elif test < 0: # root lies in lower subinterval
+                xU = xR
+            elif test > 0: # root lies in upper subinterval
+                xL = xR
+                fL = fR
+        self.iterNum = iterIdx + 1
+        self.xR = xR
 
-def f(x):
-    y = x**2 - 15*x + 50 # define objective function here
-    return y
-
-# Check if conditions are met for execution
-if not xL < xU:
-    sys.exit("Method condition is not satisfied: Lower guess input shoule be lower than upper guess input.")
-elif not f(xL)*f(xU) < 0:
-    sys.exit("Method condition is not satisfied: Product of function outputs at two guesses should be less than 0.")
-
-# Execution of method
-solFound = False
-fL = f(xL)
-for iterIdx in range(maxIterNum):
-    xR = (xL + xU)/2 # estimate root as the middle of interval
-    fR = f(xR)
-    test = fL*fR
-    if abs(fR) < errLim:
-        err = abs(fR)
-        solFound = True
-        break
-    elif test < 0: # root lies in lower subinterval
-        xU = xR
-    elif test > 0: # root lies in upper subinterval
-        xL = xR
-        fL = fR
-
-if solFound:
-    print("\nSolution was found as " + str(xR) + " with error " + str(err) + " after " + str(iterIdx + 1) + " iterations.\n")
-else:
-    print("\nSolution could not be found after specified number of iterations.\n")
+    def result(self):
+        if self.solFound:
+            print("\nSolution was found as " + str(self.xR) + " with error " + str(self.err) + " after " + str(self.iterNum) + " iterations.\n")
+        else:
+            print("\nSolution could not be found after specified number of iterations.\n")
