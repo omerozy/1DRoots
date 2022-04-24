@@ -1,29 +1,30 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-class secant:
-    def __init__(self, f, xR, method, errLim, maxIterNum):
+class invquadint:
+    def __init__(self, f, xR, xRb, xRb2, errLim, maxIterNum):
         self.f = f
         self.xR = xR
+        self.xRb = xRb
+        self.xRb2 = xRb2
         self.errLim = errLim
         self.maxIterNum = maxIterNum
-        self.method = method
     
     def exec(self):
-        fR = self.f(self.xR)
-        xRHist = [self.xR]
+        xR = self.xR
+        xRb = self.xRb
+        xRb2 = self.xRb2
+        fR = self.f(xR)
+        fRb = self.f(xRb)
+        fRb2 = self.f(xRb2)
+        xRHist = [xR]
         fRHist = [fR]
-        if self.method.methodCase == 0:
-            fRb = self.f(self.method.xRb)
         solFound = False
         for iterIdx in range(self.maxIterNum):
-            match self.method.methodCase:
-                case 0:
-                    dfR = (fRHist[-1]-fRb)/(xRHist[-1] - xRb)
-                case 1:
-                    dfR = (self.f(xRHist[-1] + self.method.dx) - fRHist[-1])/self.method.dx
-            xR = xRHist[-1] - fRHist[-1]/dfR
+            xR = fRb*fR*xRb2/((fRb2 - fRb)*(fRb2 - fR)) + fRb2*fR*xRb/((fRb - fRb2)*(fRb - fR)) + fRb2*fRb*xR/((fR - fRb2)*(fR - fRb))
             fR = self.f(xR)
+            xRb2 = xRb
+            fRb2 = fRb
             xRb = xRHist[-1]
             fRb = fRHist[-1]
             xRHist.append(xR)
@@ -39,7 +40,6 @@ class secant:
         self.xR = xR
         self.err = err
         self.iterNum = iterIdx + 1
-        
     def result(self):
         if self.solFound:
             print("\nSolution was found as " + str(self.xR) + " with error " + str(self.err) + " after " + str(self.iterNum) + " iterations.")

@@ -9,6 +9,7 @@ Methods implemented:
 3. Fixed-Point Iteration
 4. Newton-Raphson mehod
 5. Secant Method
+6. Inverse Quadratic Interpolation
 
 ## Bisection Method
 
@@ -29,3 +30,7 @@ Widely used method utilizing the derivative of the objective function
 ## Secant Method
 
 Similar to Newton-Raphson but utilizes backward finite divided difference for the objective function derivative instead of using the derivative function given as input
+
+## Inverse Quadratic Interpolation
+
+Similar to secant method but uses quadratic function with three initial guesses for new root estimation
